@@ -6,9 +6,8 @@ public class AdventureMenu extends AbstractMenu {
     //drives adeventure
 
     CheckVSCode vsCheck = new CheckVSCode();
-    Adventure adventure = new Adventure();
 
-    public Character runMenu(Character c) {
+    public int runMenu() {
         while (true) {
 
             if (vsCheck.isVSCodeRunning()) {
@@ -42,11 +41,7 @@ public class AdventureMenu extends AbstractMenu {
                 continue;
             }
 
-            if (selectedChoice == 7) {
-                return c;
-            }
-
-            c = adventure.runAdventure(c, selectedChoice);
+            return selectedChoice;
 
         }
     }

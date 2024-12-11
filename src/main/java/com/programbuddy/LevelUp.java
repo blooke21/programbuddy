@@ -1,9 +1,10 @@
 package com.programbuddy;
 
 import java.util.Map;
+
 import javax.swing.JOptionPane;
 
-public class LevelUpMenu extends AbstractMenu {
+public class LevelUp extends AbstractMenu {
 
     int counter;
 

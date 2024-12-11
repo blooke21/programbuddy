@@ -8,16 +8,24 @@ import com.github.kwhat.jnativehook.NativeHookException;
 
 public class Adventure {
 
-    long startTime;
-    long elapsedTime;
+    //checks if the user goes idle
     MouseChecker mouseChecker = new MouseChecker();
     KeyboardChecker keyboardChecker = new KeyboardChecker();
+    AdventureMenu menu = new AdventureMenu();
 
-    boolean idleMouse = false;
-    boolean idleKeyboard = false;
-    int idleCounter = 0;
+    long startTime;
+    long elapsedTime;
+    int idleCounter;
+    int run;
+    boolean idleMouse;
+    boolean idleKeyboard;
 
-    Adventure() {
+    public Character runAdventure(Character c) {
+        run = menu.runMenu();
+        idleCounter = 0;
+        idleMouse = false;
+        idleKeyboard = false;
+
         try {
             GlobalScreen.registerNativeHook();
         } catch (NativeHookException ex) {
@@ -28,9 +36,6 @@ public class Adventure {
         }
 
         GlobalScreen.addNativeKeyListener(keyboardChecker);
-    }
-
-    public Character runAdventure(Character c, int run) {
         startTime = System.currentTimeMillis();
         elapsedTime = 0;
 

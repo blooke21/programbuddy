@@ -21,8 +21,8 @@ public class Main {
 
         MainMenu mainMenu = new MainMenu();
         StatsMenu statsMenu = new StatsMenu();
-        LevelUpMenu levelUpMenu = new LevelUpMenu();
-        AdventureMenu adventureMenu = new AdventureMenu();
+        LevelUp levelUpMenu = new LevelUp();
+        Adventure adventure = new Adventure();
 
         while (true) {
             userInput = mainMenu.runMenu(character);
@@ -30,7 +30,7 @@ public class Main {
             switch (userInput) {
                 case 1 -> {
                     //Display Adventure Menu
-                    adventureMenu.runMenu(character);
+                    adventure.runAdventure(character);
                 }
                 case 2 -> {
                     //Display Character Stats

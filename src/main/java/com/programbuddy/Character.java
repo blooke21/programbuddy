@@ -90,6 +90,9 @@ public abstract class Character {
         return charStats;
     }
 
+    // public void showCharStats() {
+    //     //TODO think about if it would be more effectitve to have the character class simply show it's stats rather than having an entire seperate class to show stats
+    // }
     public int getHealth() {
         return health;
     }
