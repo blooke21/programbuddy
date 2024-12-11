@@ -9,8 +9,7 @@ public class MouseChecker {
 
     public boolean checkPointer() {
         Point currentPoint = MouseInfo.getPointerInfo().getLocation();
-        //if the mouse has moved 
-        if (firstPoint.equals(currentPoint)) {
+        if (firstPoint.equals(currentPoint)) { //if mouse hasn't moved
             return true;
         }
         firstPoint = currentPoint;

@@ -42,11 +42,12 @@ public class AdventureMenu extends AbstractMenu {
                 continue;
             }
 
-            c = adventure.runAdventure(c, selectedChoice);
-
             if (selectedChoice == 7) {
                 return c;
             }
+
+            c = adventure.runAdventure(c, selectedChoice);
+
         }
     }
 }

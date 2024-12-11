@@ -4,8 +4,6 @@ import javax.swing.JOptionPane;
 
 public class Main {
 
-    KeyboardChecker keyboardChecker = new KeyboardChecker();
-
     public static void main(String[] args) {
 
         Checker checker = new Checker();

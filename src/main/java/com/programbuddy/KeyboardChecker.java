@@ -7,8 +7,11 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
 public class KeyboardChecker implements NativeKeyListener {
 
+    boolean idleTracker = false;
+
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) {
+        idleTracker = false;
         System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
 
         if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
@@ -20,16 +23,22 @@ public class KeyboardChecker implements NativeKeyListener {
         }
     }
 
-    @Override
-    public void nativeKeyReleased(NativeKeyEvent e) {
-        System.out.println("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
+    public boolean getIdleTracker() {
+        if (!idleTracker) {
+            idleTracker = true;
+            return false;
+        }
+        return true;
     }
 
-    @Override
-    public void nativeKeyTyped(NativeKeyEvent e) {
-        System.out.println("Key Typed: " + e.getKeyText(e.getKeyCode()));
-    }
-
+    // @Override
+    // public void nativeKeyReleased(NativeKeyEvent e) {
+    //     System.out.println("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
+    // }
+    // @Override
+    // public void nativeKeyTyped(NativeKeyEvent e) {
+    //     System.out.println("Key Typed: " + e.getKeyText(e.getKeyCode()));
+    // }
     public static void main(String[] args) {
         try {
             GlobalScreen.registerNativeHook();
@@ -40,6 +49,7 @@ public class KeyboardChecker implements NativeKeyListener {
             System.exit(1);
         }
 
-        GlobalScreen.addNativeKeyListener(new KeyboardChecker());
+        KeyboardChecker keyboardChecker = new KeyboardChecker();
+        GlobalScreen.addNativeKeyListener(keyboardChecker);
     }
 }
