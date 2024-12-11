@@ -2,12 +2,14 @@
 /Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/Main.java
 /Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/IdleMessage.java
 /Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/StatsMenu.java
+/Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/adventure/AdventureJFrame.java
 /Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/KeyboardChecker.java
 /Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/MainMenu.java
 /Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/MouseChecker.java
 /Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/CheckVSCode.java
 /Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/Adventure.java
 /Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/Character.java
-/Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/LevelUpMenu.java
+/Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/adventure/AdventureMenu.java
+/Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/adventure/AdventureProgressBar.java
+/Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/LevelUp.java
 /Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/AbstractMenu.java
-/Users/blakewarnock/Projects/Java/programbuddy/src/main/java/com/programbuddy/AdventureMenu.java

@@ -1,11 +1,15 @@
-package com.programbuddy;
+package com.programbuddy.adventure;
 
 import javax.swing.JOptionPane;
 
+import com.programbuddy.AbstractMenu;
+import com.programbuddy.CheckVSCode;
+import com.programbuddy.Checker;
+
 public class AdventureMenu extends AbstractMenu {
-    //drives adeventure
 
     CheckVSCode vsCheck = new CheckVSCode();
+    Checker checker = new Checker();
 
     public int runMenu() {
         while (true) {

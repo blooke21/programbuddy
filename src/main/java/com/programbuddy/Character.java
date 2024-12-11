@@ -97,6 +97,10 @@ public abstract class Character {
         return health;
     }
 
+    public void reduceHealth() {
+        health--;
+    }
+
     public int getLvl() {
         return lvl;
     }

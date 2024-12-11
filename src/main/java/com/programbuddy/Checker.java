@@ -6,7 +6,7 @@ public class Checker {
     double doubleValue;
 
     // checks input to ensure it is an int
-    boolean checkInt(String num) {
+    public boolean checkInt(String num) {
 
         System.out.println(String.format("Parsing int: \"%s\"", num));
 
@@ -24,7 +24,7 @@ public class Checker {
     }
 
     // checks input to ensure it is an double
-    boolean checkDouble(String num) {
+    public boolean checkDouble(String num) {
 
         System.out.println(String.format("Parsing int: \"%s\"", num));
 
@@ -42,7 +42,7 @@ public class Checker {
     }
 
     // checks input to ensure it is a string
-    boolean checkString(String string) {
+    public boolean checkString(String string) {
 
         System.out.println(String.format("Parsing string: \"%s\"", string));
 
