@@ -1,10 +1,10 @@
 package com.programbuddy;
 
 import java.util.Map;
+
 import javax.swing.JOptionPane;
 
 public class StatsMenu extends AbstractMenu {
-//TODO add exp to next level to msg
 
     public Character runMenu(Character c) {
         msgBuilder = "Here is " + c.getName() + "'s stats!\nLevel: " + c.getLvl() + "\nMax Health: " + c.getHealth();
@@ -12,6 +12,10 @@ public class StatsMenu extends AbstractMenu {
         for (Map.Entry<String, Integer> en : c.getCharStats().entrySet()) {
             msgBuilder = msgBuilder + "\n" + en.getKey() + ": " + en.getValue();
         }
+        msgBuilder += "\nCurrent Experience: " + c.getExp();
+        msgBuilder += "\nExperience till next level: " + c.getExpToNextLvl();
+        msgBuilder += "\nTimes Died: " + c.getTimeDied();
+
         msgBuilder += """
                 \n
                 Strength(str) reduces damage taken

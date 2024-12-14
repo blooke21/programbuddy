@@ -6,7 +6,7 @@ import com.programbuddy.AbstractMenu;
 import com.programbuddy.CheckVSCode;
 import com.programbuddy.Checker;
 
-public class AdventureMenu extends AbstractMenu {
+public class RunSelector extends AbstractMenu {
 
     CheckVSCode vsCheck = new CheckVSCode();
     Checker checker = new Checker();
@@ -48,9 +48,5 @@ public class AdventureMenu extends AbstractMenu {
             return selectedChoice;
 
         }
-    }
-
-    public void removeMenu() {
-
     }
 }

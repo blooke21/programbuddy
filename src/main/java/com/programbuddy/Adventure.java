@@ -7,9 +7,11 @@ import java.util.concurrent.TimeUnit;
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
 import com.programbuddy.adventure.AdventureJFrame;
-import com.programbuddy.adventure.AdventureMenu;
+import com.programbuddy.adventure.AdventureMsging;
 import com.programbuddy.adventure.AdventureProgressBar;
 import com.programbuddy.adventure.DeathHandler;
+import com.programbuddy.adventure.FinishRunMsg;
+import com.programbuddy.adventure.RunSelector;
 
 public class Adventure {
 
@@ -27,33 +29,47 @@ public class Adventure {
     //checks if the user goes idle
     MouseChecker mouseChecker = new MouseChecker();
     KeyboardChecker keyboardChecker = new KeyboardChecker();
-    AdventureMenu menu = new AdventureMenu();
+    RunSelector menu = new RunSelector();
     AdventureJFrame AdventureFrame = new AdventureJFrame();
+    AdventureMsging adventureMsging;
     AdventureProgressBar progressBar;
     AdventureProgressBar health;
     DeathHandler deathHandler = new DeathHandler();
+    FinishRunMsg finishMsg = new FinishRunMsg();
     IdleMessage idleMessage = new IdleMessage();
     Character character;
 
     long startTime;
     long elapsedTime;
-    int idleCounter;
-    long run;
+    int tempIdleCounter;
+    int run;
+    int runTime;
     int healthPool;
     boolean idleMouse;
     boolean idleKeyboard;
+    long timeIdle;
+    int dmgTaken;
+    int expGained;
 
     @SuppressWarnings("CallToPrintStackTrace")
     public Character runAdventure(Character c) {
-        deathHandler.dispose();
-        idleMessage.dispose();
+        //create instances of JFrame components
         progressBar = new AdventureProgressBar();
         health = new AdventureProgressBar();
+        adventureMsging = new AdventureMsging();
+
+        run = menu.runMenu();
+        System.err.println("User selected: " + run);
+        if (run == 7) {
+            System.err.println("User backed out of adventure");
+            return c;
+        }
+
         character = c;
         intialize();
 
         //adventure loop
-        while (elapsedTime < run) {
+        while (elapsedTime < runTime) {
             elapsedTime = (new Date()).getTime() - startTime;
             System.out.println(elapsedTime);
 
@@ -61,20 +77,25 @@ public class Adventure {
             idleKeyboard = this.keyboardChecker.getIdleTracker();
 
             if (idleMouse && idleKeyboard) {
-                idleCounter++;
-                System.err.println("idle for " + idleCounter + " seconds");
+                tempIdleCounter++;
+                System.err.println("idle for " + tempIdleCounter + " seconds");
             } else {
-                idleCounter = 0;
+                tempIdleCounter = 0;
                 idleMessage.hideError();
             }
 
-            if (idleCounter >= 5) {
+            if (tempIdleCounter >= 5) {
+                //TODO add str to reduce dmg
                 System.err.println("User has gone idle for five seconds");
                 idleMessage.throwError();
-                healthPool = character.takeDamage(5);
+                timeIdle += 1;
+                healthPool = character.takeDamage(200);
+                dmgTaken += 5;
                 health.updateBar(healthPool);
+                adventureMsging.updateText(c.getName(), dmgTaken, timeIdle);
             }
             if (healthPool == 0) {
+                deathHandler.intialize();
                 exitAdventure();
                 return character;
             }
@@ -88,38 +109,45 @@ public class Adventure {
                 e.printStackTrace();
             }
         }
-
+        expGained = ((30 * run) + (((run - 1) * 5) * run));
+        finishMsg.intialize(run, expGained);
+        exitAdventure();
+        character.gainExp(expGained);
         return character;
     }
 
-    public void intialize() {
-        run = menu.runMenu();
-        if (run == 7) {
-            exitAdventure();
-        }
-        run = run * 60 * 30 * 1000;
-        idleCounter = 0;
+    private void intialize() {
+        System.err.println("Adventure Initalized");
+        deathHandler.dispose();
+        finishMsg.dispose();
+        idleMessage.dispose();
+        //TODO add in stat calcuations
+        runTime = run * 60 * 30 * 1000;
+        runTime = 30;
+        System.err.println("Adventure RunTime = " + runTime);
+        tempIdleCounter = 0;
         elapsedTime = 0;
+        timeIdle = 0;
+        dmgTaken = 0;
         healthPool = character.getHealth();
         idleMouse = false;
         idleKeyboard = false;
-        progressBar.initalize(0, (int) run, 0, "HORIZONTAL", "Adventure Progress");
+        adventureMsging.intialize();
+        progressBar.initalize(0, runTime, 0, "HORIZONTAL", "Adventure Progress");
         health.initalize(0, character.getHealth(), character.getHealth(), "VERTICAL", character.getName() + "'s Health");
         AdventureFrame.initalize();
         AdventureFrame.getContentPane().add(progressBar, BorderLayout.NORTH);
         AdventureFrame.getContentPane().add(health, BorderLayout.WEST);
+        AdventureFrame.getContentPane().add(adventureMsging, BorderLayout.CENTER);
         //https://www.youtube.com/watch?v=JEI-fcfnFkc
 
         AdventureFrame.setVisible(true);
 
         GlobalScreen.addNativeKeyListener(keyboardChecker);
         startTime = System.currentTimeMillis();
-
-        System.err.println("User selected: " + run);
     }
 
-    public void exitAdventure() {
-        deathHandler.intialize();
+    private void exitAdventure() {
         AdventureFrame.dispose();
         character.fullHeal();
     }

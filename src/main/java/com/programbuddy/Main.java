@@ -30,7 +30,7 @@ public class Main {
             switch (userInput) {
                 case 1 -> {
                     //Display Adventure Menu
-                    adventure.runAdventure(character);
+                    character = adventure.runAdventure(character);
                 }
                 case 2 -> {
                     //Display Character Stats

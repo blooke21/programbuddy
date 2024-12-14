@@ -9,18 +9,20 @@ public class LevelUp extends AbstractMenu {
     int counter;
 
     public Character runMenu(Character c) {
-        counter = 0;
-        msgBuilder = "Which skill do you want to level up";
-
-        for (Map.Entry<String, Integer> en : c.getCharStats().entrySet()) {
-            counter++;
-            msgBuilder = msgBuilder + "\n" + counter + ". " + en.getKey() + " : " + en.getValue();
-        }
-
-        // userInput = JOptionPane.showInputDialog(null, msgBuilder);
-        counter++;
 
         while (true) {
+            counter = 0;
+
+            msgBuilder = "Which skill do you want to level up";
+
+            for (Map.Entry<String, Integer> en : c.getCharStats().entrySet()) {
+                counter++;
+                msgBuilder = msgBuilder + "\n" + counter + ". " + en.getKey() + " : " + en.getValue();
+            }
+
+            // userInput = JOptionPane.showInputDialog(null, msgBuilder);
+            counter++;
+
             userInput = JOptionPane.showInputDialog(null, errorString + msgBuilder + "\nEnter " + counter + " to go back" + "\nAvaliable Level Ups (" + c.getPendingLvl() + ")");
             if (!checker.checkInt(userInput)) {
                 errorString = "Wrong Input\n";

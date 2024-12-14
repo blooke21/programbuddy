@@ -71,6 +71,7 @@ public abstract class Character {
         if (stat.equals("con")) {
             maxHealth = maxHealth + (charStats.get(stat) * 10);
         }
+        lvl += 1;
         toggleAvalLvl();
         reducePendingLvl();
     }
