@@ -49,4 +49,8 @@ public class AdventureMenu extends AbstractMenu {
 
         }
     }
+
+    public void removeMenu() {
+
+    }
 }

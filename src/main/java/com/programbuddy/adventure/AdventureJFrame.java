@@ -11,4 +11,5 @@ public class AdventureJFrame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
     }
+    //TODO add msging about dmg taken
 }

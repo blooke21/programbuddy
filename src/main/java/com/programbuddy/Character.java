@@ -5,6 +5,7 @@ import java.util.HashMap;
 public abstract class Character {
 
     protected String name;
+    protected int maxHealth;
     protected int health;
     protected int lvl;
     protected int exp;
@@ -17,7 +18,8 @@ public abstract class Character {
 
     public Character(String name) {
         this.name = name;
-        this.health = 400;
+        this.maxHealth = 400;
+        this.health = maxHealth;
         //DOTO make this so the levelUp switch can't have errors
         this.charStats.put("str", 0);
         this.charStats.put("dex", 0);
@@ -39,10 +41,14 @@ public abstract class Character {
     public int takeDamage(int dmg) {
         if (dmg >= health) {
             timeDied += 1;
-            return 99999;
+            return 0;
         }
         health = health - dmg;
         return health;
+    }
+
+    public void fullHeal() {
+        health = maxHealth;
     }
 
     public void finishRun(int time, String runType) {
@@ -63,7 +69,7 @@ public abstract class Character {
     public void levelUpStat(String stat) {
         charStats.replace(stat, (charStats.get(stat) + 1));
         if (stat.equals("con")) {
-            health = health + (charStats.get(stat) * 10);
+            maxHealth = maxHealth + (charStats.get(stat) * 10);
         }
         toggleAvalLvl();
         reducePendingLvl();
@@ -94,11 +100,8 @@ public abstract class Character {
     //     //TODO think about if it would be more effectitve to have the character class simply show it's stats rather than having an entire seperate class to show stats
     // }
     public int getHealth() {
+        // System.err.println("Character's health = " + health);
         return health;
-    }
-
-    public void reduceHealth() {
-        health--;
     }
 
     public int getLvl() {

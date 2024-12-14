@@ -12,7 +12,7 @@ public class MainMenu extends AbstractMenu {
             } else {
                 msgBuilder = msgBuilder + "\n3. Level Up!(Unavaliable)";
             }
-            msgBuilder = msgBuilder + "\n4. Exit";
+            msgBuilder = msgBuilder + "\n4. Exit\n";
 
             userInput = JOptionPane.showInputDialog(null, errorString + "\n" + msgBuilder);
             errorString = "";

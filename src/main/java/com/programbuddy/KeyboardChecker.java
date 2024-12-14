@@ -39,17 +39,15 @@ public class KeyboardChecker implements NativeKeyListener {
     // public void nativeKeyTyped(NativeKeyEvent e) {
     //     System.out.println("Key Typed: " + e.getKeyText(e.getKeyCode()));
     // }
-    public static void main(String[] args) {
-        try {
-            GlobalScreen.registerNativeHook();
-        } catch (NativeHookException ex) {
-            System.err.println("There was a problem registering the native hook.");
-            System.err.println(ex.getMessage());
-
-            System.exit(1);
-        }
-
-        KeyboardChecker keyboardChecker = new KeyboardChecker();
-        GlobalScreen.addNativeKeyListener(keyboardChecker);
-    }
+    // public static void main(String[] args) {
+    //     try {
+    //         GlobalScreen.registerNativeHook();
+    //     } catch (NativeHookException ex) {
+    //         System.err.println("There was a problem registering the native hook.");
+    //         System.err.println(ex.getMessage());
+    //         System.exit(1);
+    //     }
+    //     KeyboardChecker keyboardChecker = new KeyboardChecker();
+    //     GlobalScreen.addNativeKeyListener(keyboardChecker);
+    // }
 }
