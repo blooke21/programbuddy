@@ -1,4 +1,4 @@
-package com.programbuddy;
+package com.programbuddy.adventure;
 
 import java.io.BufferedReader;
 import java.io.IOException;

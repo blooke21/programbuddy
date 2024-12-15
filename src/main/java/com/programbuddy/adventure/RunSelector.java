@@ -3,7 +3,6 @@ package com.programbuddy.adventure;
 import javax.swing.JOptionPane;
 
 import com.programbuddy.AbstractMenu;
-import com.programbuddy.CheckVSCode;
 import com.programbuddy.Checker;
 
 public class RunSelector extends AbstractMenu {

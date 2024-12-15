@@ -5,8 +5,8 @@ import java.util.HashMap;
 public abstract class Character {
 
     protected String name;
-    protected int maxHealth;
-    protected int health;
+    protected float maxHealth;
+    protected float health;
     protected int lvl;
     protected int exp;
     protected int expToNextLvl;
@@ -38,7 +38,7 @@ public abstract class Character {
         this.avalLvl = false;
     }
 
-    public int takeDamage(int dmg) {
+    public float takeDamage(float dmg) {
         if (dmg >= health) {
             timeDied += 1;
             return 0;
@@ -97,10 +97,14 @@ public abstract class Character {
         return charStats;
     }
 
+    public Integer getSpecificStat(String stat) {
+        return charStats.get(stat);
+    }
+
     // public void showCharStats() {
     //     //TODO think about if it would be more effectitve to have the character class simply show it's stats rather than having an entire seperate class to show stats
     // }
-    public int getHealth() {
+    public float getHealth() {
         // System.err.println("Character's health = " + health);
         return health;
     }

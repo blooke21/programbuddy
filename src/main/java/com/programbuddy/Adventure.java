@@ -9,6 +9,7 @@ import com.github.kwhat.jnativehook.NativeHookException;
 import com.programbuddy.adventure.AdventureJFrame;
 import com.programbuddy.adventure.AdventureMsging;
 import com.programbuddy.adventure.AdventureProgressBar;
+import com.programbuddy.adventure.CheckVSCode;
 import com.programbuddy.adventure.DeathHandler;
 import com.programbuddy.adventure.FinishRunMsg;
 import com.programbuddy.adventure.RunSelector;
@@ -37,6 +38,7 @@ public class Adventure {
     DeathHandler deathHandler = new DeathHandler();
     FinishRunMsg finishMsg = new FinishRunMsg();
     IdleMessage idleMessage = new IdleMessage();
+    CheckVSCode checkVSCode = new CheckVSCode();
     Character character;
 
     long startTime;
@@ -44,14 +46,16 @@ public class Adventure {
     int tempIdleCounter;
     int run;
     int runTime;
-    int healthPool;
+    float dmgToTake;
+    float healthPool;
     boolean idleMouse;
     boolean idleKeyboard;
-    long timeIdle;
-    int dmgTaken;
+    int timeIdle;
+    float dmgTaken;
     int expGained;
 
     @SuppressWarnings("CallToPrintStackTrace")
+
     public Character runAdventure(Character c) {
         //create instances of JFrame components
         progressBar = new AdventureProgressBar();
@@ -84,14 +88,15 @@ public class Adventure {
                 idleMessage.hideError();
             }
 
-            if (tempIdleCounter >= 5) {
-                //TODO add str to reduce dmg
+            if (tempIdleCounter >= 5 || !checkVSCode.isVSCodeRunning()) {
                 System.err.println("User has gone idle for five seconds");
                 idleMessage.throwError();
                 timeIdle += 1;
-                healthPool = character.takeDamage(200);
-                dmgTaken += 5;
-                health.updateBar(healthPool);
+                healthPool = character.takeDamage(dmgToTake);
+                dmgTaken += dmgToTake;
+                //it's okay that health progress bar is not recieveing a float. It just handles the graphics does not need exact calcuations
+                health.updateBar((long) healthPool);
+                System.err.println("Charcter's health is now " + character.getHealth());
                 adventureMsging.updateText(c.getName(), dmgTaken, timeIdle);
             }
             if (healthPool == 0) {
@@ -121,20 +126,20 @@ public class Adventure {
         deathHandler.dispose();
         finishMsg.dispose();
         idleMessage.dispose();
-        //TODO add in stat calcuations
-        runTime = run * 60 * 30 * 1000;
-        runTime = 30;
-        System.err.println("Adventure RunTime = " + runTime);
+        runTime = (run * 60 * 30 * 1000) - ((15 * character.getSpecificStat("dex")) * 1000);
+        System.err.println("Adventure RunTime = " + runTime + " milliseconds");
         tempIdleCounter = 0;
         elapsedTime = 0;
         timeIdle = 0;
         dmgTaken = 0;
         healthPool = character.getHealth();
+        dmgToTake = 30 - (float) (.15 * character.getSpecificStat("str"));
+        System.err.println("C will take " + dmgToTake + " on idle");
         idleMouse = false;
         idleKeyboard = false;
         adventureMsging.intialize();
         progressBar.initalize(0, runTime, 0, "HORIZONTAL", "Adventure Progress");
-        health.initalize(0, character.getHealth(), character.getHealth(), "VERTICAL", character.getName() + "'s Health");
+        health.initalize(0, (int) character.getHealth(), (int) character.getHealth(), "VERTICAL", character.getName() + "'s Health");
         AdventureFrame.initalize();
         AdventureFrame.getContentPane().add(progressBar, BorderLayout.NORTH);
         AdventureFrame.getContentPane().add(health, BorderLayout.WEST);

@@ -14,7 +14,7 @@ public class AdventureMsging extends JPanel {
         add(this.lab1);
     }
 
-    public void updateText(String name, int dmgTaken, long timeIdle) {
+    public void updateText(String name, float dmgTaken, long timeIdle) {
         lab1.setText("<html>" + name + " has taken " + dmgTaken + " damage! Be more careful!<br>This was because you've been idle for " + timeIdle + " seconds!<html>");
     }
 }
