@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 public class Main {
 
-    private static final String CHAR_FILE = "chracter.ser";
+    private static final String CHAR_FILE = "character.ser";
 
     public static void main(String[] args) {
 
