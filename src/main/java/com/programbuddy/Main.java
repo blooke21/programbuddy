@@ -1,24 +1,32 @@
 package com.programbuddy;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import javax.swing.JOptionPane;
 
 public class Main {
 
+    private static final String CHAR_FILE = "chracter.ser";
+
     public static void main(String[] args) {
 
-        Checker checker = new Checker();
-        int userInput;
-        String characterName;
-
         JOptionPane.showMessageDialog(null, "Welcome to\nBlake Warnock's Programming Buddy v0.001", "Welcome", JOptionPane.DEFAULT_OPTION);
-        //TODO add functionality to save information to computer and add check here is user already has a character!!!
-        do {
-            characterName = JOptionPane.showInputDialog(null, "Enter Character Name!", "Character Creation", JOptionPane.DEFAULT_OPTION);
-        } while (!checker.checkString(characterName));
 
-        Character character = new Character(characterName) {
-        };
+        Character character = intializeCharacter();
+        CharacterWrapper wrapper = new CharacterWrapper(character);
 
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                saveCharacter(wrapper.getCharacter());
+            }
+        });
+
+        int userInput;
         MainMenu mainMenu = new MainMenu();
         StatsMenu statsMenu = new StatsMenu();
         LevelUp levelUpMenu = new LevelUp();
@@ -54,5 +62,36 @@ public class Main {
             }
         }
 
+    }
+
+    public static Character intializeCharacter() {
+        File File = new File(CHAR_FILE);
+        System.err.println("Initalizing Character");
+
+        if (File.exists()) {
+            System.err.println("File Found!");
+            try (FileInputStream fis = new FileInputStream(CHAR_FILE); ObjectInputStream ois = new ObjectInputStream(fis)) {
+
+                return (Character) ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                System.err.println("Found file but could not reterieve data");
+            }
+        }
+        String characterName;
+        Checker checker = new Checker();
+
+        do {
+            characterName = JOptionPane.showInputDialog(null, "Enter Character Name!", "Character Creation", JOptionPane.DEFAULT_OPTION);
+        } while (!checker.checkString(characterName));
+        return new Character(characterName);
+    }
+
+    public static void saveCharacter(Character c) {
+        try (FileOutputStream fos = new FileOutputStream(CHAR_FILE); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+
+            oos.writeObject(c);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,8 +1,9 @@
 package com.programbuddy;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public abstract class Character {
+public class Character implements Serializable {
 
     protected String name;
     protected float maxHealth;
