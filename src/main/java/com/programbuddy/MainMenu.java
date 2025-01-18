@@ -28,7 +28,7 @@ public class MainMenu extends AbstractMenu {
             }
 
             if (selectedChoice > 4 || selectedChoice < 0) {
-                msgBuilder = "\nWrong Input!!\n\n" + msgBuilder;
+                errorString = "\nWrong Input!!\n\n";
                 continue;
             }
             if (selectedChoice == 3 && !c.getAvalLvl()) {

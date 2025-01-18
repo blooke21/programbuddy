@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.JOptionPane;
+
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
 import com.programbuddy.adventure.AdventureJFrame;
@@ -30,6 +32,7 @@ public class Adventure {
     //checks if the user goes idle
     MouseChecker mouseChecker = new MouseChecker();
     KeyboardChecker keyboardChecker = new KeyboardChecker();
+
     RunSelector menu = new RunSelector();
     AdventureJFrame AdventureFrame = new AdventureJFrame();
     AdventureMsging adventureMsging;
@@ -54,24 +57,28 @@ public class Adventure {
     float dmgTaken;
     int expGained;
 
-    @SuppressWarnings("CallToPrintStackTrace")
-
     public Character runAdventure(Character c) {
+
+        if (checkVSCode.initalizeVSCode() == 2) {
+            return c;
+        }
+
         //create instances of JFrame components
         progressBar = new AdventureProgressBar();
         health = new AdventureProgressBar();
         adventureMsging = new AdventureMsging();
 
-        run = menu.runMenu();
-        System.err.println("User selected: " + run);
+        character = c;
+        run = intialize();
         if (run == 7) {
             System.err.println("User backed out of adventure");
             return c;
         }
 
-        character = c;
-        intialize();
+        return adventureLoop(c, run);
+    }
 
+    private Character adventureLoop(Character c, int run) {
         //adventure loop
         while (elapsedTime < runTime) {
             elapsedTime = (new Date()).getTime() - startTime;
@@ -88,7 +95,7 @@ public class Adventure {
                 idleMessage.hideError();
             }
 
-            if (tempIdleCounter >= 5 || !checkVSCode.isVSCodeRunning()) {
+            if (tempIdleCounter >= 30 || !checkVSCode.isVSCodeRunning()) {
                 System.err.println("User has gone idle for five seconds");
                 idleMessage.throwError();
                 timeIdle += 1;
@@ -121,8 +128,13 @@ public class Adventure {
         return character;
     }
 
-    private void intialize() {
+    private int intialize() {
         System.err.println("Adventure Initalized");
+        run = menu.runMenu();
+        System.err.println("User selected: " + run);
+        if (run == 7) {
+            return run;
+        }
         deathHandler.dispose();
         finishMsg.dispose();
         idleMessage.dispose();
@@ -134,7 +146,7 @@ public class Adventure {
         dmgTaken = 0;
         healthPool = character.getHealth();
         dmgToTake = 30 - (float) (.15 * character.getSpecificStat("str"));
-        System.err.println("C will take " + dmgToTake + " on idle");
+        System.err.println("Character will take " + dmgToTake + " on idle");
         idleMouse = false;
         idleKeyboard = false;
         adventureMsging.intialize();
@@ -150,6 +162,8 @@ public class Adventure {
 
         GlobalScreen.addNativeKeyListener(keyboardChecker);
         startTime = System.currentTimeMillis();
+
+        return run;
     }
 
     private void exitAdventure() {
