@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.JOptionPane;
-
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
 import com.programbuddy.adventure.AdventureJFrame;
@@ -123,8 +121,8 @@ public class Adventure {
         }
         expGained = ((30 * run) + (((run - 1) * 5) * run));
         finishMsg.intialize(run, expGained);
-        exitAdventure();
         character.gainExp(expGained);
+        exitAdventure();
         return character;
     }
 
