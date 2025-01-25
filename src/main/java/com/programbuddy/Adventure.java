@@ -42,6 +42,8 @@ public class Adventure {
     CheckVSCode checkVSCode = new CheckVSCode();
     Character character;
 
+    //how many seconds the user can be idle for before taking dmg
+    int dmgAfter = 90;
     long startTime;
     long elapsedTime;
     int tempIdleCounter;
@@ -51,7 +53,6 @@ public class Adventure {
     float healthPool;
     boolean idleMouse;
     boolean idleKeyboard;
-    int timeIdle;
     float dmgTaken;
     int expGained;
 
@@ -93,16 +94,15 @@ public class Adventure {
                 idleMessage.hideError();
             }
 
-            if (tempIdleCounter >= 30 || !checkVSCode.isVSCodeRunning()) {
-                System.err.println("User has gone idle for five seconds");
+            if (tempIdleCounter >= dmgAfter || !checkVSCode.isVSCodeRunning()) {
+                System.err.println("User has gone idle for 1 min 30 seconds");
                 idleMessage.throwError();
-                timeIdle += 1;
                 healthPool = character.takeDamage(dmgToTake);
                 dmgTaken += dmgToTake;
                 //it's okay that health progress bar is not recieveing a float. It just handles the graphics does not need exact calcuations
                 health.updateBar((long) healthPool);
                 System.err.println("Charcter's health is now " + character.getHealth());
-                adventureMsging.updateText(c.getName(), dmgTaken, timeIdle);
+                adventureMsging.updateText(c.getName(), dmgTaken, tempIdleCounter);
             }
             if (healthPool == 0) {
                 deathHandler.intialize();
@@ -140,7 +140,6 @@ public class Adventure {
         System.err.println("Adventure RunTime = " + runTime + " milliseconds");
         tempIdleCounter = 0;
         elapsedTime = 0;
-        timeIdle = 0;
         dmgTaken = 0;
         healthPool = character.getHealth();
         dmgToTake = 30 - (float) (.15 * character.getSpecificStat("str"));
