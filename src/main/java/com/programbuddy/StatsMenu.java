@@ -15,6 +15,7 @@ public class StatsMenu extends AbstractMenu {
         msgBuilder += "\nCurrent Experience: " + c.getExp();
         msgBuilder += "\nExperience till next level: " + c.getExpToNextLvl();
         msgBuilder += "\nTimes Died: " + c.getTimeDied();
+        msgBuilder += "\nPending Level Ups: " + c.getPendingLvl();
 
         msgBuilder += """
                 \n

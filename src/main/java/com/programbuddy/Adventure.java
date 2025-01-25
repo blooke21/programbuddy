@@ -62,11 +62,6 @@ public class Adventure {
             return c;
         }
 
-        //create instances of JFrame components
-        progressBar = new AdventureProgressBar();
-        health = new AdventureProgressBar();
-        adventureMsging = new AdventureMsging();
-
         character = c;
         run = intialize();
         if (run == 7) {
@@ -133,6 +128,11 @@ public class Adventure {
         if (run == 7) {
             return run;
         }
+        //create instances of JFrame components
+        progressBar = new AdventureProgressBar();
+        health = new AdventureProgressBar();
+        adventureMsging = new AdventureMsging();
+
         deathHandler.dispose();
         finishMsg.dispose();
         idleMessage.dispose();
@@ -165,6 +165,9 @@ public class Adventure {
 
     private void exitAdventure() {
         AdventureFrame.dispose();
+        progressBar.removeAll();
+        health.removeAll();
+        adventureMsging.removeAll();
         character.fullHeal();
     }
 }

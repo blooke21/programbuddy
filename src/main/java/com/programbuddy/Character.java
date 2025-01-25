@@ -73,8 +73,10 @@ public class Character implements Serializable {
             maxHealth = maxHealth + (charStats.get(stat) * 10);
         }
         lvl += 1;
-        toggleAvalLvl();
         reducePendingLvl();
+        if (this.pendingLvl == 0) {
+            toggleAvalLvl();
+        }
     }
 
     private void toggleAvalLvl() {
